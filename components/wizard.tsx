@@ -1,10 +1,11 @@
 import * as React from "react";
 
+import { Steps, Button,Divider, Row, Col } from "antd";
 import { Form } from "react-final-form";
 
 interface Props {
-  initialValues: any;
-  onSubmit: any;
+  initialValues: DomainModel;
+  onSubmit: Function;
 }
 interface State {
   page: number;
@@ -14,11 +15,15 @@ type Stooge = "larry" | "moe" | "curly";
 type Toppings = "ham" | "mushrooms" | "cheese" | "chicken";
 interface DomainModel {
   firstName?: string;
-  employed?: string;
-  stooge: Stooge;
-  toppings: Array<Toppings>;
+  employed?: boolean;
+  stooge?: Stooge;
+  toppings?: Array<Toppings>;
+  lastName?: string;
+  favoriteColor?: string;
+  notes?: string;
+  amount?: number;
 }
-
+const { Step } = Steps;
 export default class Wizard extends React.Component<Props, State> {
   static Page: any = ({ children }: { children: React.ReactChildren }) =>
     children;
@@ -32,10 +37,7 @@ export default class Wizard extends React.Component<Props, State> {
   }
   next = (values: DomainModel) =>
     this.setState(state => ({
-      page: Math.min(
-        state.page + 1,
-        React.Children.count(this.props.children) - 1
-      ),
+      page: Math.min(state.page + 1, (this.props.children as any).length - 1),
       values
     }));
 
@@ -81,21 +83,51 @@ export default class Wizard extends React.Component<Props, State> {
       >
         {({ handleSubmit, submitting, values }) => (
           <form onSubmit={handleSubmit}>
-            {activePage}
-            <div className="buttons">
-              {page > 0 && (
-                <button type="button" onClick={this.previous}>
-                  « Previous
-                </button>
-              )}
-              {!isLastPage && <button type="submit">Next »</button>}
-              {isLastPage && (
-                <button type="submit" disabled={submitting}>
-                  Submit
-                </button>
-              )}
-            </div>
+            <Row>
+              <Col span={24}>
+                <Divider />
+                <Steps progressDot current={page}>
 
+                  <Step title="Finished" description="This is a description." />
+                  <Step
+                    title="In Progress"
+                    description="This is a description."
+                  />
+                  <Step title="Waiting" description="This is a description." />
+                  <Step title="" description="This is a description." />
+                </Steps>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={24}>
+
+                <Divider />
+                {activePage}
+              </Col>
+            </Row>
+            <Row>
+              <Col span={24}>
+                <div className="buttons">
+                  {page > 0 && (
+                    <Button onClick={this.previous}>« Previous</Button>
+                  )}
+                  {!isLastPage && (
+                    <Button type="primary" htmlType="submit">
+                      Next »
+                    </Button>
+                  )}
+                  {isLastPage && (
+                    <Button
+                      type="primary"
+                      htmlType="submit"
+                      disabled={submitting}
+                    >
+                      Submit
+                    </Button>
+                  )}
+                </div>
+              </Col>
+            </Row>
             <pre>{JSON.stringify(values, null, 1)}</pre>
           </form>
         )}
