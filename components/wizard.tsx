@@ -3,6 +3,7 @@ import * as React from "react";
 import { Steps, Button,Divider, Row, Col } from "antd";
 import { Form } from "react-final-form";
 
+//TODO: Move all these to shared/models or something and add actual form params to DomainModel
 interface Props {
   initialValues: DomainModel;
   onSubmit: Function;
@@ -13,6 +14,7 @@ interface State {
 }
 type Stooge = "larry" | "moe" | "curly";
 type Toppings = "ham" | "mushrooms" | "cheese" | "chicken";
+
 interface DomainModel {
   firstName?: string;
   employed?: boolean;
