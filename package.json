@@ -19,7 +19,7 @@
     "react-dom": "16.9.0",
     "react-final-form": "^6.3.0",
     "react-final-form-hooks": "^2.0.1",
-    "yarn": "^1.17.3"
+    "yarn": "^1.22.0"
   },
   "devDependencies": {
     "@types/node": "^12.7.2",
